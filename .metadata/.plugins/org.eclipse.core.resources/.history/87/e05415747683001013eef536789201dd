@@ -1,0 +1,109 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #444;
+            color: #fff;
+        }
+        .btn {
+            padding: 5px 10px;
+            background: #222;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.jsp">Task Manager</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Back arrow -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:history.back()">&#8592; Back</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Dashboard -->
+    <h2 style="text-align:center; margin-top:20px;">Admin Dashboard</h2>
+    <table>
+        <tr>
+            <th>Task ID</th>
+            <th>Task Name</th>
+            <th>Assigned To</th>
+            <th>Status</th>
+            <th>Deadline</th>
+            <th>Actions</th>
+        </tr>
+        <%
+            try {
+                Connection con = (Connection)application.getAttribute("con");
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery("SELECT * FROM tasks");
+                while(rs.next()) {
+        %>
+        <tr>
+            <td><%= rs.getInt("task_id") %></td>
+            <td><%= rs.getString("task_name") %></td>
+            <td><%= rs.getString("assigned_to") %></td>
+            <td><%= rs.getString("status") %></td>
+            <td><%= rs.getDate("deadline") %></td>
+            <td>
+                <!-- Update Task -->
+                <form action="updateTaskStatus.jsp" method="post" style="display:inline;">
+                    <input type="hidden" name="task_id" value="<%= rs.getInt("task_id") %>">
+                    <select name="status">
+                        <option value="Pending" <%= rs.getString("status").equals("Pending") ? "selected" : "" %>>Pending</option>
+                        <option value="In Progress" <%= rs.getString("status").equals("In Progress") ? "selected" : "" %>>In Progress</option>
+                        <option value="Completed" <%= rs.getString("status").equals("Completed") ? "selected" : "" %>>Completed</option>
+                    </select>
+                    <button type="submit" class="btn">Update</button>
+                </form>
+
+                <!-- Delete Task -->
+                <form action="deleteTask.jsp" method="post" style="display:inline;">
+                    <input type="hidden" name="task_id" value="<%= rs.getInt("task_id") %>">
+                    <button type="submit" class="btn">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <%
+                }
+            } catch(Exception e) {
+                out.println("Error: " + e.getMessage());
+            }
+        %>
+    </table>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light text-center py-3 mt-5">
+        <p>&copy; 2025 Task Manager. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,46 @@
+
+body {
+  font-family: 'Comic Sans MS', 'Segoe UI', cursive, sans-serif;
+  background: linear-gradient(135deg, #E6E6FA, #D8BFD8);
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+header, footer {
+  background-color: #6A5ACD;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  font-family: 'Comic Sans MS', cursive;
+  letter-spacing: 2px;
+}
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+h1, h2, h3 {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: #4B0082;
+}
+input, button, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+button {
+  background-color: #9370DB;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+button:hover {
+  background-color: #6A5ACD;
+}

@@ -1,0 +1,104 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Dashboard - WorkNest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;min-height:100vh;display:flex;flex-direction:column;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#f6f3fa,#ebe3f8);color:#4b4453;}
+    nav{display:flex;justify-content:space-between;align-items:center;background:#a88fd8;padding:1rem 2rem;}
+    nav .title{font-size:1.6rem;font-weight:700;color:white;}
+    nav .actions{display:flex;gap:1rem;}
+    nav .actions a{padding:.6rem 1.2rem;border-radius:30px;background:white;color:#6a4ba8;font-weight:600;text-decoration:none;}
+    nav .actions a:hover{background:#d3c2f7;color:white;}
+    table{width:100%;border-collapse:collapse;margin-top:1.5rem;border-radius:1rem;overflow:hidden;box-shadow:0 4px 12px rgba(168,143,216,0.25);}
+    th,td{padding:1rem;text-align:left;}
+    th{background:#a88fd8;color:white;}
+    tr:nth-child(even){background:#f6f3fa;}
+    tr:hover{background:#e9defc;}
+    .btn{padding:.4rem .9rem;border:none;border-radius:.6rem;cursor:pointer;font-size:.9rem;}
+    .btn-danger{background:#dc3545;color:white;}
+    .btn-secondary{background:#6c757d;color:white;}
+    .btn{background:linear-gradient(135deg,#a88fd8,#6a4ba8);color:white;}
+    footer{background:#a88fd8;color:white;padding:1rem;text-align:center;margin-top:auto;border-top-left-radius:1rem;border-top-right-radius:1rem;}
+    .container{max-width:1000px;margin:2rem auto;padding:0 1.5rem;}
+    select{padding:.5rem;border-radius:.6rem;border:1px solid #ddd;}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="title">WorkNest</div>
+    <div class="actions">
+      <a href="<c:url value='/admin/login'/>">Admin</a>
+      <a href="<c:url value='/user/login'/>">User</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>Admin Dashboard</h2>
+    <a class="btn" href="<c:url value='/tasks/new'/>">Create Task</a>
+    <a class="btn btn-secondary" href="<c:url value='/admin/logout'/>">Logout</a>
+
+    <!-- Users Table -->
+    <h3 style="margin-top:20px;">Users</h3>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+      <c:forEach items="${users}" var="u">
+        <tr>
+          <td>${u.name}</td>
+          <td>${u.email}</td>
+          <td>${u.role}</td>
+          <td>
+            <form method="post" action="<c:url value='/user/delete/${u.userId}'/>" onsubmit="return confirm('Delete user?')">
+              <button class="btn btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+      </c:forEach>
+    </table>
+
+    <!-- Tasks Table -->
+    <h3 style="margin-top:20px;">Tasks</h3>
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Assigned To</th>
+        <th>Due Date</th>
+        <th>Action</th>
+      </tr>
+      <c:forEach var="t" items="${allTasks}">
+        <tr>
+          <td>${t.title}</td>
+          <td>${t.status}</td>
+          <td>${t.assignedUser.name}</td>
+          <td>${t.dueDate}</td>
+          <td>
+            <c:if test="${t.status eq 'DELAYED'}">
+              <form action="<c:url value='/admin/reassignTask'/>" method="post" style="display:flex;gap:.5rem;align-items:center;">
+                <input type="hidden" name="taskId" value="${t.taskId}" />
+                <select name="newUserId">
+                  <c:forEach var="u" items="${users}">
+                    <option value="${u.userId}">${u.name}</option>
+                  </c:forEach>
+                </select>
+                <button type="submit" class="btn">Reassign</button>
+              </form>
+            </c:if>
+          </td>
+        </tr>
+      </c:forEach>
+    </table>
+
+    <button type="button" class="btn btn-secondary" style="margin-top:15px;" onclick="history.back()">Back</button>
+  </div>
+
+  <footer>© 2025 WorkNest</footer>
+</body>
+</html>
