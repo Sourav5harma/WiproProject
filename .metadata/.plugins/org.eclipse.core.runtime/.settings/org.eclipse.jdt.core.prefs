@@ -1,8 +1,0 @@
-eclipse.preferences.version=1
-org.eclipse.jdt.core.classpathVariable.ECLIPSE_HOME=/Applications/Eclipse.app/Contents/Eclipse/
-org.eclipse.jdt.core.classpathVariable.JRE_LIB=/Users/souravsharma/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_21.0.8.v20250724-1412/jre/lib/jrt-fs.jar
-org.eclipse.jdt.core.classpathVariable.JRE_SRC=/Users/souravsharma/.p2/pool/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.macosx.x86_64_21.0.8.v20250724-1412/jre/lib/src.zip
-org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=
-org.eclipse.jdt.core.classpathVariable.JUNIT_HOME=/Users/souravsharma/.p2/pool/plugins/org.junit_4.13.2.v20240929-1000.jar
-org.eclipse.jdt.core.classpathVariable.M2_REPO=/Users/souravsharma/.m2/repository
-org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled

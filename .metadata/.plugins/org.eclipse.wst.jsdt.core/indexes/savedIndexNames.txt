@@ -1,3 +1,0 @@
-INDEX VERSION 1.4+/Users/souravsharma/Desktop/worknest/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
-4191281257.index
-730697766.index
